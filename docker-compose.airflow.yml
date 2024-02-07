@@ -1,0 +1,72 @@
+version: '3.8'
+name: 'airflow-sqlite-tmds'
+
+x-airflow-common:
+  &airflow-common
+  build:
+    context: ./docker
+    dockerfile: Dockerfile
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////root/airflow/airflow.db
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite:////root/airflow/airflow.db
+    AIRFLOW__CELERY__RESULT_BACKEND: db+sqlite:///root/airflow/airflow.db
+
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
+
+  user: root
+
+
+services:
+  airflow-webserver-users:
+    extends:
+      file: common-env.yaml
+      service: airflow-common
+    command: ['webserver']
+    ports:
+      - ${PORT_AIRFLOW:-8080}:8080
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', 'http://localhost:8080/health']
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: always
+
+  # deploying the airflow triggerer
+  airflow-triggerer-users:
+    extends:
+      file: common-env.yaml
+      service: airflow-common
+    command: ['triggerer']
+    healthcheck:
+      test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      airflow-webserver-users:
+        condition:
+          service_healthy
+
+  # deplying the airflow scheduler
+  airflow-scheduler-users:
+    extends:
+      file: common-env.yaml
+      service: airflow-common
+    command: ['scheduler']
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      airflow-webserver-users:
+        condition:
+          service_healthy
