@@ -15,9 +15,7 @@ x-airflow-common:
 
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
-
   user: root
-
 
 services:
   airflow-webserver-users:
