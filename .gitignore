@@ -163,3 +163,5 @@ cython_debug/
 *.lock
 poetry.lock
 *.db
+*.db
+db/airflow.db

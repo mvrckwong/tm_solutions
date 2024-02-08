@@ -14,7 +14,7 @@ default_args = {
     'owner': 'Maverick Wong',
     'depends_on_past': True,
     
-    'start_date': datetime(2024, 1, 1, tzinfo=pendulum.timezone('Asia/Singapore'))),
+    'start_date': datetime(2024, 1, 1),
     'end_date': None,
     'schedule_interval': None,
     
