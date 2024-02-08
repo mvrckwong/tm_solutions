@@ -1,3 +1,4 @@
+# Ecommerce dataset
 ecommerce_dataset = [
     "bigquery-public-data.thelook_ecommerce.distribution_centers",
     "bigquery-public-data.thelook_ecommerce.events",
@@ -6,8 +7,4 @@ ecommerce_dataset = [
     "bigquery-public-data.thelook_ecommerce.orders",
     "bigquery-public-data.thelook_ecommerce.products",
     "bigquery-public-data.thelook_ecommerce.users"
-]
-
-taxi_trips_dataset = [
-    ""
 ]
