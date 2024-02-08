@@ -9,27 +9,36 @@ x-airflow-common:
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite://db/airflow.db
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite://db/airflow.db
-    AIRFLOW__CELERY__RESULT_BACKEND: db+sqlite://db/airflow.db
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite://${AIRFLOW_SQLITE_DB_DEST}
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite://${AIRFLOW_SQLITE_DB_DEST}
 
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
   user: root
+  volumes:
+    - ${AIRFLOW_SQLITE_DB_SRC}:${AIRFLOW_SQLITE_DB_DEST}
+    
+    - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+    - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+    - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
+    - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
 
 services:
   airflow-init:
     <<: *airflow-common
-    entrypoint: /bin/bash -c "/bin/bash -c \"$${@}\""
-    command: |
-      /bin/bash -c "
-        airflow db init
-        airflow db upgrade
-        airflow users create -r Admin -u admin -e airflow@airflow.com -f admin -l user -p airflow
-      "
+    command: 
+      - "/bin/bash airflow db init"
     environment:
       <<: *airflow-common-env
-
+      _AIRFLOW_DB_MIGRATE: ${_AIRFLOW_DB_MIGRATE}
+      _AIRFLOW_WWW_USER_CREATE: ${_AIRFLOW_WWW_USER_CREATE}
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD}
+      _PIP_ADDITIONAL_REQUIREMENTS: ''
+    volumes:
+      - ${AIRFLOW_PROJ_DIR:-.}:/sources
+    #restart: always
 
   # airflow-cli:
   #   <<: *airflow-common
