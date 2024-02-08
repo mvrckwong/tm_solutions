@@ -7,3 +7,7 @@ ecommerce_dataset = [
     "bigquery-public-data.thelook_ecommerce.products",
     "bigquery-public-data.thelook_ecommerce.users"
 ]
+
+taxi_trips_dataset = [
+    ""
+]
