@@ -18,7 +18,7 @@ x-airflow-common:
   user: root
   volumes:
     - ${AIRFLOW_SQLITE_DB_SRC}:${AIRFLOW_SQLITE_DB_DEST}
-    
+
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
