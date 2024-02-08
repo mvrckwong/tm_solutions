@@ -1,14 +1,15 @@
+import shutil
+
 from os import getenv, environ
 from pyspark.sql import SparkSession
 from google.cloud import bigquery
-import shutil
 from typing import List
+
 from dataset import ecommerce_dataset 
 from config import *
 
-
 # Load and Set BigQuery Credentials
-BIGQUERY_JSON_FILE = SRC_DIR / getenv("BIGQUERY_JSON_FILE")
+BIGQUERY_JSON_FILE = PYENV_DIR / getenv("BIGQUERY_JSON_FILE")
 environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(BIGQUERY_JSON_FILE)
 
 def query_to_df(spark: SparkSession, bigquery_dataset: str):
@@ -53,6 +54,11 @@ def main(link_datasets: List[str], test=False):
         
     spark.stop()
     return True
+
+
+def test():
+    print('test function')
+
 
 if __name__ == "__main__":
     # Setting the current dataset

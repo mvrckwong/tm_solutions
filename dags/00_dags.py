@@ -1,20 +1,35 @@
+import importlib
+from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
 from config import *
 
+extract_module = importlib.import_module('01_extract')
+extract_main = extract_module.test
+
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': True,
+    'start_date': datetime(2023, 1, 1),
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 3,
+    'retry_delay': timedelta(minutes=5),
+}
+
 # Sample DAG
-# with DAG(
-#     f"{current_proj_name}-Preprocess_AssetReg",
-#     default_args = AIRFLOW_CONFIG.DEFAULT_ARGS,
-#     schedule_interval = AIRFLOW_CONFIG.SCHEDULE_INTERVAL
-# ) as dag:
+with DAG(
+    '01_Extraction',
+    default_args=default_args,
+    description='Extraction of data inside bigquery',
+    schedule_interval=timedelta(days=1),
+) as dag:
     
-#     run_preprocess = BashOperator(task_id=f"run_preprocess",
-#                                   on_failure_callback=on_failure,
-#                                   on_retry_callback=on_retry,
-#                                   bash_command = "python " + \
-#                                     str(current_proj_pprocess / "main.py"), 
-#                                   dag=dag)
+    # Define the task within the DAG context
+    run_extraction = PythonOperator(
+        task_id='run_extraction',
+        python_callable=extract_main,
+    )
 
 
 # with DAG(
