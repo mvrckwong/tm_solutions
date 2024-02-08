@@ -1,0 +1,1 @@
+poetry export --format requirements.txt --without-hashes --output requirements.txt
