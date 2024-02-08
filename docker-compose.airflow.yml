@@ -9,62 +9,82 @@ x-airflow-common:
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////root/airflow/airflow.db
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite:////root/airflow/airflow.db
-    AIRFLOW__CELERY__RESULT_BACKEND: db+sqlite:///root/airflow/airflow.db
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite://db/airflow.db
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite://db/airflow.db
+    AIRFLOW__CELERY__RESULT_BACKEND: db+sqlite://db/airflow.db
 
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
   user: root
 
 services:
-  airflow-webserver-users:
-    extends:
-      file: common-env.yaml
-      service: airflow-common
-    command: ['webserver']
-    ports:
-      - ${PORT_AIRFLOW:-8080}:8080
-    healthcheck:
-      test: ['CMD', 'curl', '--fail', 'http://localhost:8080/health']
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    restart: always
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash -c "/bin/bash -c \"$${@}\""
+    command: |
+      /bin/bash -c "
+        airflow db init
+        airflow db upgrade
+        airflow users create -r Admin -u admin -e airflow@airflow.com -f admin -l user -p airflow
+      "
+    environment:
+      <<: *airflow-common-env
 
-  # deploying the airflow triggerer
-  airflow-triggerer-users:
-    extends:
-      file: common-env.yaml
-      service: airflow-common
-    command: ['triggerer']
-    healthcheck:
-      test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
-    restart: always
-    depends_on:
-      airflow-webserver-users:
-        condition:
-          service_healthy
 
-  # deplying the airflow scheduler
-  airflow-scheduler-users:
-    extends:
-      file: common-env.yaml
-      service: airflow-common
-    command: ['scheduler']
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    restart: always
-    depends_on:
-      airflow-webserver-users:
-        condition:
-          service_healthy
+  # airflow-cli:
+  #   <<: *airflow-common
+  #   profiles:
+  #     - debug
+  #   environment:
+  #     <<: *airflow-common-env
+  #     CONNECTION_CHECK_MAX_COUNT: "0"
+  #   # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
+  #   command:
+  #     - bash
+  #     - -c
+  #     - airflow
+
+  # airflow-webserver-users:
+  #   &airflow-common
+  #   command: ['webserver']
+  #   ports:
+  #     - ${PORT_AIRFLOW:-8080}:8080
+  #   healthcheck:
+  #     test: ['CMD', 'curl', '--fail', 'http://localhost:8080/health']
+  #     interval: 1m30s
+  #     timeout: 30s
+  #     retries: 5
+  #     start_period: 30s
+  #   restart: always
+
+  # # deploying the airflow triggerer
+  # airflow-triggerer-users:
+  #   &airflow-common
+  #   command: ['triggerer']
+  #   healthcheck:
+  #     test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
+  #     interval: 1m30s
+  #     timeout: 30s
+  #     retries: 5
+  #     start_period: 30s
+  #   restart: always
+  #   depends_on:
+  #     airflow-webserver-users:
+  #       condition:
+  #         service_healthy
+
+  # # deplying the airflow scheduler
+  # airflow-scheduler-users:
+  #   &airflow-common
+  #   command: ['scheduler']
+  #   healthcheck:
+  #     test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #     start_period: 30s
+  #   restart: always
+  #   depends_on:
+  #     airflow-webserver-users:
+  #       condition:
+  #         service_healthy

@@ -1,11 +1,11 @@
 # Getting the base image
-FROM apache/airflow:2.7.1
+FROM apache/airflow:2.8.1
 
-# Copying the requirements
-COPY requirements.txt /opt/requirements.txt
+# # Copying the requirements
+# COPY requirements.txt /opt/requirements.txt
 
-# Upgrade the latest pip
-RUN pip install --no-cache-dir --upgrade pip
+# # Upgrade the latest pip
+# RUN pip install --no-cache-dir --upgrade pip
 
-# Install the latest dependencies
-RUN pip install --no-cache-dir -r /opt/requirements.txt
+# # Install the latest dependencies
+# RUN pip install --no-cache-dir -r /opt/requirements.txtw
