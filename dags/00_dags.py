@@ -1,16 +1,23 @@
 import importlib
+import pendulum
+
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from config import *
 
+
 extract_module = importlib.import_module('01_extract')
-extract_main = extract_module.test
+extract_main = extract_module.main
 
 default_args = {
     'owner': 'Maverick Wong',
-    'depends_on_past': False,
-    'start_date': datetime(2024, 1, 1),
+    'depends_on_past': True,
+    
+    'start_date': datetime(2024, 1, 1, tzinfo=pendulum.timezone('Asia/Singapore'))),
+    'end_date': None,
+    'schedule_interval': None,
+    
     'email_on_failure': False,
     'email_on_retry': False,
     # 'retries': 3,
@@ -19,7 +26,7 @@ default_args = {
 
 # Sample DAG
 with DAG(
-    '01_Extraction_Bigquery',
+    '01_DataExtraction_Bigquery',
     default_args=default_args,
     description='Extraction of data inside bigquery',
 ) as dag:
