@@ -1,5 +1,5 @@
 # Getting the base image
-FROM apache/airflow:2.7.2
+FROM apache/airflow:2.8.0
 
 # # Copying the requirements
 # COPY requirements.txt /opt/requirements.txt
