@@ -8,21 +8,20 @@ extract_module = importlib.import_module('01_extract')
 extract_main = extract_module.test
 
 default_args = {
-    'owner': 'airflow',
-    'depends_on_past': True,
-    'start_date': datetime(2023, 1, 1),
+    'owner': 'Maverick Wong',
+    'depends_on_past': False,
+    'start_date': datetime(2024, 1, 1),
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 3,
-    'retry_delay': timedelta(minutes=5),
+    # 'retries': 3,
+    # 'retry_delay': timedelta(minutes=5),
 }
 
 # Sample DAG
 with DAG(
-    '01_Extraction',
+    '01_Extraction_Bigquery',
     default_args=default_args,
     description='Extraction of data inside bigquery',
-    schedule_interval=timedelta(days=1),
 ) as dag:
     
     # Define the task within the DAG context
