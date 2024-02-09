@@ -1,0 +1,39 @@
+# Getting the base image
+FROM apache/airflow:2.7.1
+
+# Set environment variables for Java and Spark
+# ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+# ENV SPARK_VERSION=3.4.2
+# ENV HADOOP_VERSION=3.2
+# ENV SPARK_HOME=/opt/spark
+# ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+# Copying the requirements
+COPY requirements.txt /opt/requirements.txt
+
+# Upgrade to the latest pip and install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r /opt/requirements.txt
+
+# Install OpenJDK-11 and wget
+# USER root
+# RUN apt-get update && \
+#     apt-get install -y openjdk-11-jdk wget && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
+
+# Download and install Apache Spark
+# RUN wget --no-verbose https://downloads.apache.org/spark/spark-$SPARK_VERSION/pyspark-$SPARK_VERSION.tar.gz && \
+#     tar -xzf spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION.tgz -C /opt && \
+#     mv /opt/spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION $SPARK_HOME && \
+#     rm spark-$SPARK_VERSION-bin-hadoop$HADOOP_VERSION.tgz
+
+# # Insert JAVA_GATEWAY_EXITED environment variable with a default value
+# ENV JAVA_GATEWAY_EXITED 1
+
+# # Configure PySpark to use Python3 and set it to be used in Spark as well
+# ENV PYSPARK_PYTHON=python3
+# ENV PYSPARK_DRIVER_PYTHON=python3
+
+# # Switch back to airflow user if needed
+# USER airflow
