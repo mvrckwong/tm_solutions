@@ -166,3 +166,4 @@ poetry.lock
 *.db
 db/airflow.db
 *.csv
+*.db
