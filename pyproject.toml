@@ -11,6 +11,8 @@ python-dotenv = "^1.0.1"
 loguru = "^0.7.2"
 pyspark = "^3.5.0"
 google-cloud-bigquery = "^3.17.2"
+seaborn = "^0.13.2"
+missingno = "^0.5.2"
 
 
 [build-system]
