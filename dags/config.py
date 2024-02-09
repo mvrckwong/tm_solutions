@@ -18,6 +18,7 @@ if not ENV_FILE.exists():
     raise FileNotFoundError(f"Python environment file not found: \n{ENV_FILE}")
 load_dotenv(ENV_FILE)
 
+# Apache Spark and Hadoop Versions
 # https://downloads.apache.org/spark/spark-3.5.0/
 # https://downloads.apache.org/spark/spark-3.5.0/pyspark_3.5.0.tar.gz
 # https://downloads.apache.org/spark/spark-3.5.0/pyspark-3.5.0.tar.gz

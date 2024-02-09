@@ -9,10 +9,7 @@ if not COUNT_MISSING_DATA_DIR.exists():
 GRAPH_MISSING_DATA_DIR = OUTPUT_DIR / "03_graph_missing"
 if not GRAPH_MISSING_DATA_DIR.exists():
     GRAPH_MISSING_DATA_DIR.mkdir()
-    
-EVALUATE_DATA_DIR = OUTPUT_DIR / "04_evaluate"
-if not EVALUATE_DATA_DIR.exists():
-    EVALUATE_DATA_DIR.mkdir()
+
 
 csv_files = [x for x in DATA_DIR.glob("*.csv")]
 

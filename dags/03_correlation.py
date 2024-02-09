@@ -1,38 +1,41 @@
 from config import *
 import pandas as pd
-from explore_dataset import CountMissingData, VisualizeMissing, EvaluateDataset, VisualizeFeatureColumns
 
-COUNT_MISSING_DATA_DIR = OUTPUT_DIR / "02_count_missing"
-if not COUNT_MISSING_DATA_DIR.exists():
-    COUNT_MISSING_DATA_DIR.mkdir()
-    
-GRAPH_MISSING_DATA_DIR = OUTPUT_DIR / "03_graph_missing"
-if not GRAPH_MISSING_DATA_DIR.exists():
-    GRAPH_MISSING_DATA_DIR.mkdir()
-    
+from explore_dataset import EvaluateDataset
+
 EVALUATE_DATA_DIR = OUTPUT_DIR / "04_evaluate"
 if not EVALUATE_DATA_DIR.exists():
     EVALUATE_DATA_DIR.mkdir()
 
-csv_files = [x for x in DATA_DIR.glob("*.csv")]
+# Get the following dataset.
+orders_df = pd.read_csv(DATA_DIR / "thelook_ecommerce-orders.csv")
+order_items_df = pd.read_csv(DATA_DIR / "thelook_ecommerce-order_items.csv")
+products_df = pd.read_csv(DATA_DIR / "thelook_ecommerce-products.csv")
 
-for index, file in enumerate(csv_files):
-    file_name = file.stem.split("-")[-1]
-    
-    df = pd.read_csv(file,dtype=str)
-    
-    # Get the missing data count and percentage based on input dataframe
-    df_missing_data = CountMissingData(df).get()
-    df_missing_data.to_csv(COUNT_MISSING_DATA_DIR / f"{file_name}.csv")
-    
-    graph_missing = VisualizeMissing(
-        df, name=file_name, 
-        export_plot=True, 
-        show_plot=False,
-        process_null=True,
-        process_zero=True,
-        output_path=GRAPH_MISSING_DATA_DIR
-    )
-    graph_missing.Bar(show=False)
-    graph_missing.Matrix(show=False)
-    graph_missing.Heatmap(show=False)
+# Joining together - merging orders, order_items and products
+result_df = pd.merge(
+    order_items_df, orders_df, how="left",
+    left_on="order_id", right_on="order_id"
+)
+result_df = pd.merge(
+    result_df, products_df, how="left",
+    left_on="product_id", right_on="id"
+)
+
+# Label Encoding
+col_label = ["category", "brand", "department"]
+for column in col_label:
+    result_df[column] = result_df[column].astype('category').cat.codes.astype('int64')
+
+eval_data = EvaluateDataset(
+    input_df=result_df, data_name="correlation_merged_data",
+    export_plot=True, show_plot=False, output_path=EVALUATE_DATA_DIR
+)
+
+eval_data.get_all_corr()
+eval_data.get_all_hist()
+
+# category
+# brand 
+# department
+

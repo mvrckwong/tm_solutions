@@ -22,6 +22,10 @@ from config import DATA_DIR
 import seaborn as sns
 import math
 
+
+import plotly.graph_objects as go
+import plotly.offline as pyo
+
 #############################################
 #   ___ _____ _   _  _ ___   _   ___ ___    #
 #  / __|_   _/_\ | \| |   \ /_\ | _ |   \   #
@@ -91,8 +95,13 @@ class EvaluateDataset:
     
         for corr in all_correlation:
             plt.figure(figsize=self._figsize, dpi=self._dpi)
-            df_corr = self.df.corr(method=corr)
             
+            # Preprocessing.
+            df_corr = self.df.select_dtypes(include=['int64', 'float64'])
+            columns_to_drop = [column for column in df_corr.columns if "id" in column]
+            df_corr = df_corr.drop(columns=columns_to_drop)
+            
+            df_corr = df_corr.corr(method=corr)
             fig = sns.heatmap(df_corr, annot=True, cmap="inferno", center=0)
             fig.set(title=f"{self.name} - {corr.title()} Correlation Heatmap")
             
@@ -241,7 +250,8 @@ class VisualizeMissing:
         
         # Save or Show the results
         self._saving_and_showing(_name = fig_name, _show = show)
-    
+        
+        
 
 ######################################
 #   ___ ___  ___   ___ ___ ___ ___   #
