@@ -53,7 +53,7 @@ def main(datasets:List, test:bool):
         
         # Save DataFrame as a single CSV file with a specific name
         save_single_csv(df, name)
-        if index == 0 and test == False:
+        if index == 0 and test == True:
             break
         
     spark.stop()
