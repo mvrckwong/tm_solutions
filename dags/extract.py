@@ -18,6 +18,9 @@ def query_to_df(spark: SparkSession, bigquery_dataset: str):
 
 def save_single_csv(df, name):
     """Save DataFrame as a single CSV with a specific name."""
+    if not DATA_DIR.exists():
+        DATA_DIR.mkdir()
+    
     temp_dir = DATA_DIR / "temp"
     df.coalesce(1).write.mode("overwrite").option("header", "true").csv(str(temp_dir))
     
@@ -31,7 +34,7 @@ def save_single_csv(df, name):
     shutil.rmtree(str(temp_dir))
 
 @logger.catch
-def main(test=False):
+def main():
     link_datasets = ecommerce_dataset
     
     # Create Spark Session
@@ -51,8 +54,8 @@ def main(test=False):
         
         # Save DataFrame as a single CSV file with a specific name
         save_single_csv(df, name)
-        if index == 0 and test == True:
-            break
+        # if index == 0:
+        #     break
         
     spark.stop()
     return True
@@ -66,3 +69,5 @@ def main(test=False):
 #     # Run the main function
 #     if main(current_dataset, test=debug_stage):
 #         logger.info("Main function successfully executed.")
+
+main()
