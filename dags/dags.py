@@ -4,11 +4,12 @@ import pendulum
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+
 from config import *
+from extract import main as EXTRACT_NAME
 
-
-extract_module = importlib.import_module('01_extract')
-extract_main = extract_module.main
+# extract_module = importlib.import_module('01_extract')
+# extract_main = extract_module.main
 
 default_args = {
     'owner': 'Maverick Wong',
@@ -26,7 +27,7 @@ default_args = {
 
 # Sample DAG
 with DAG(
-    '01_DataExtraction_Bigquery',
+    '01_Extraction_Bigquery',
     default_args=default_args,
     description='Extraction of data inside bigquery',
 ) as dag:
@@ -34,7 +35,7 @@ with DAG(
     # Define the task within the DAG context
     run_extraction = PythonOperator(
         task_id='run_extraction',
-        python_callable=extract_main,
+        python_callable=EXTRACT_NAME,
     )
 
 

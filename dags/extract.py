@@ -58,10 +58,6 @@ def main(test=False):
     return True
 
 
-# def test():
-#     print('test function')
-
-
 # if __name__ == "__main__":
 #     # Setting the current dataset
 #     current_dataset = ecommerce_dataset
