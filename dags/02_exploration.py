@@ -1,6 +1,6 @@
 from config import *
 import pandas as pd
-from explore_dataset import CountMissingData, VisualizeMissing, EvaluateDataset
+from explore_dataset import CountMissingData, VisualizeMissing, EvaluateDataset, VisualizeFeatureColumns
 
 COUNT_MISSING_DATA_DIR = OUTPUT_DIR / "02_count_missing"
 if not COUNT_MISSING_DATA_DIR.exists():
@@ -9,6 +9,10 @@ if not COUNT_MISSING_DATA_DIR.exists():
 GRAPH_MISSING_DATA_DIR = OUTPUT_DIR / "03_graph_missing"
 if not GRAPH_MISSING_DATA_DIR.exists():
     GRAPH_MISSING_DATA_DIR.mkdir()
+    
+EVALUATE_DATA_DIR = OUTPUT_DIR / "04_evaluate"
+if not EVALUATE_DATA_DIR.exists():
+    EVALUATE_DATA_DIR.mkdir()
 
 csv_files = [x for x in DATA_DIR.glob("*.csv")]
 
@@ -21,7 +25,6 @@ for index, file in enumerate(csv_files):
     df_missing_data = CountMissingData(df).get()
     df_missing_data.to_csv(COUNT_MISSING_DATA_DIR / f"{file_name}.csv")
     
-    #
     graph_missing = VisualizeMissing(
         df, name=file_name, 
         export_plot=True, 
@@ -33,6 +36,3 @@ for index, file in enumerate(csv_files):
     graph_missing.Bar(show=False)
     graph_missing.Matrix(show=False)
     graph_missing.Heatmap(show=False)
-    
-    # if index==0:
-    #     break
