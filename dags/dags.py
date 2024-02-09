@@ -1,37 +1,44 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from pendulum import timezone
+
 from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
 from config import *
-from extract import main as EXTRACT_NAME
+from extract import main as EXTRACT_MAIN
 
-
-default_args = {
-    'owner': 'Maverick Wong',
-    'depends_on_past': True,
-    'schedule_interval': None,
+DEFAULT_ARGS = {
+    "owner": "Maverick Wong",
+    "depends_on_past": True,
     
-    'start_date': datetime(2024, 1, 1),
-    'end_date': None,
+    "email": ["mvrckwong@gmail.com"],
+    "email_on_failure": False,
+    "email_on_retry": False,
     
+    "retries": 1,
+    "retry_delay": timedelta(minutes=1),
     
-    'email_on_failure': False,
-    'email_on_retry': False,
-    # 'retries': 3,
-    # 'retry_delay': timedelta(minutes=5),
+    "start_date": datetime(2024, 1, 1, tzinfo=timezone("Asia/Singapore")),
+    "end_date": None,
+    
+    "schedule_interval": None,
+    "catchup": False
 }
-    
+
+
 with DAG(
-    '01_BigqueryExtraction',
-    default_args=default_args,
+    "01_BigqueryDataExtraction",
+    default_args=DEFAULT_ARGS,
+    schedule_interval=None,
     description='Extraction of data inside bigquery',
-) as dag:
+    catchup=False
+    ) as dag:
     
     # Define the task within the DAG context
-    run_extraction = PythonOperator(
-        task_id='run_extraction',
-        python_callable=EXTRACT_NAME(test=True),
-        #schedule_interval=None,
+    run_extraction = BashOperator(
+        task_id="run_extraction",
+        bash_command = f"python {DAGS_DIR}/extract.py",
         dag=dag
     )
 

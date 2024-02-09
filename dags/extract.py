@@ -34,8 +34,7 @@ def save_single_csv(df, name):
     shutil.rmtree(str(temp_dir))
 
 @logger.catch
-def main():
-    link_datasets = ecommerce_dataset
+def main(datasets:List, test:bool):
     
     # Create Spark Session
     spark = SparkSession.builder \
@@ -44,7 +43,7 @@ def main():
         .getOrCreate()
 
     # Loop through the BigQuery Dataset selected
-    for index, dataset in enumerate(link_datasets):
+    for index, dataset in enumerate(datasets):
         logger.debug(f"Current dataset: {dataset}")
         name_list = dataset.split(".")[-2:]
         name = "-".join(name_list)
@@ -54,20 +53,18 @@ def main():
         
         # Save DataFrame as a single CSV file with a specific name
         save_single_csv(df, name)
-        # if index == 0:
-        #     break
+        if index == 0 and test == False:
+            break
         
     spark.stop()
     return True
 
 
-# if __name__ == "__main__":
-#     # Setting the current dataset
-#     current_dataset = ecommerce_dataset
-#     debug_stage = False
+if __name__ == "__main__":
+    # Setting the current dataset
+    current_dataset = ecommerce_dataset
+    debug_stage = False
     
-#     # Run the main function
-#     if main(current_dataset, test=debug_stage):
-#         logger.info("Main function successfully executed.")
-
-main()
+    # Run the main function
+    if main(current_dataset, test=debug_stage):
+        logger.info("Main function successfully executed.")
