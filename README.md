@@ -41,7 +41,9 @@ Second dashboard focuses on the customer data, where is our primary customers lo
 ### Python Graphs
 
 #### Managing Missing Values
-Moving over to python visualization, I have a few templates of function that graphs and captures missing values.
+Moving over to python visualization, I have a few templates of function that graphs and captures missing values. Missing values are important to decide the processing techniques needed for further analysis. For example, regression techniques are sensitive when processing missing values or zeroes. The result may lead to movement of median and mean values, at the same time, variance and standard deviation. Although, decision trees algorithm are robust to missing values in the dataset comparing with other algorithms. 
+
+Graphing missing values are important to decide the processing techniques needed for further analysis.
 
 ![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
 ![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
