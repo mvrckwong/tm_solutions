@@ -27,7 +27,14 @@ Thinking Machines Solutions
    ```
 ## Insights.
 
+### PowerBI Dashboard
 ![Dashboard Summary](.output/01_pbi/01_Summary.PNG)
+![Dashboard Customer](.output/01_pbi/02_Customer.PNG)
+![Dashboard DataModel](.output/01_pbi/03_DataModel.PNG)
+
+### Python Graphs
+![Dashboard Summary](.output/02_python/01_Summary.PNG)
+![Dashboard Summary](.output/02_python/01_Summary.PNG)
 
 
 ## Technologies Used
