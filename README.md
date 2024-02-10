@@ -1,4 +1,4 @@
-# Thinking Machine Data Science
+# TMDS Exam Solutions
 This is a solution set for TMDS take home exam. All outputs are within ".output" folder, except for PowerBI file and the main dataset extraction since both files are too large to upload to GitHub.
 
 <!-- Project Development -->
