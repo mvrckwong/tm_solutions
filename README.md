@@ -28,6 +28,12 @@ Thinking Machines Solutions
 ## Insights.
 
 ### PowerBI Dashboard
+After the extract procedure, we developed and managed the data inside the PowerBi. Below are images of the dashboard and the data model. First, we manage the data relationship, data model, data types, data accuracy inside the model view. This ensures the data is highly accuracte and consistent before creating the report.
+
+Afterwards, I created the dashboards to emphasize the overall summary of the data. Assuming the report would be an executive report for growth, I focused on sales and order counts with highly performing brands and categories. The summary dashboard highlights where we at right now, it terms of growth, and who are the key drivers behind the growth. The sales is steadily climbing 2020, 2021 until 2023, and then it started to drop - although we assumed that 2024 lacks data.
+
+Second dashboard focuses on the customer data, where is our primary customers located at. The dashboard is focused on the top 10 locations with the highest number of customers. Also at the right, the breakdown of the customer itself.
+
 ![Dashboard Summary](.output/01_pbi/01_Summary.PNG)
 ![Dashboard Customer](.output/01_pbi/02_Customer.PNG)
 ![Dashboard DataModel](.output/01_pbi/03_PBI_DataModel.PNG)
@@ -35,6 +41,8 @@ Thinking Machines Solutions
 ### Python Graphs
 
 #### Managing Missing Values
+Moving over to python visualization, I have a few templates of function that graphs and captures missing values.
+
 ![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
 ![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
 
