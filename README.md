@@ -40,7 +40,7 @@ Second dashboard focuses on the customer data, where is our primary customers lo
 
 ### Python Graphs
 
-#### Managing Missing Values
+#### Graphing Missing Values
 Moving over to python visualization, I have a few templates of function that graphs and captures missing values. Missing values are important to decide the processing techniques needed for further analysis. For example, regression techniques are sensitive when processing missing values or zeroes. The result may lead to movement of median and mean values, at the same time, variance and standard deviation. Although, decision trees algorithm are robust to missing values in the dataset comparing with other algorithms. 
 
 Graphing missing values are important to decide the processing techniques needed for further analysis.
@@ -48,7 +48,12 @@ Graphing missing values are important to decide the processing techniques needed
 ![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
 ![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
 
-#### Correlation
+#### Graphing Correlation
+
+Finally, correlation is important relationship indications between variables, therefore can reveal predictive relationship. This allows us to see if changes in one variable correspond to changes in another variable.
+
+Cost, retail price and sale price are correlated, illustrating how the base cost of a product influences the retail and final price.
+
 ![Correlation](.output/04_evaluate/2024210-Correlation_Merged_DataData_CorrSpearman.png)
 
 ## Technologies Used
