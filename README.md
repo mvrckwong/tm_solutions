@@ -38,6 +38,9 @@ Thinking Machines Solutions
 ![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
 ![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
 
+#### Correlation
+![Correlation](.output/04_evaluate/2024210-Correlation_Merged_DataData_CorrSpearman.png)
+
 ## Technologies Used
 - BigQuery
 - Pandas
