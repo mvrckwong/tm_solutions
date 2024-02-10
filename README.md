@@ -25,6 +25,10 @@ Thinking Machines Solutions
    ```js
    poetry run python dags/03_correlation.py
    ```
+## Insights.
+
+![Dashboard Summary](.output/01_folder/01_Summary.PNG)
+
 
 ## Technologies Used
 - BigQuery
