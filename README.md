@@ -27,7 +27,7 @@ Thinking Machines Solutions
    ```
 ## Insights.
 
-![Dashboard Summary](.output/01_folder/01_Summary.PNG)
+![Dashboard Summary](.output/01_pbi/01_Summary.PNG)
 
 
 ## Technologies Used
