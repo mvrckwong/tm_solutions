@@ -33,10 +33,10 @@ Thinking Machines Solutions
 ![Dashboard DataModel](.output/01_pbi/03_PBI_DataModel.PNG)
 
 ### Python Graphs
+
+#### Managing Missing Values
 ![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
 ![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
-
-
 
 ## Technologies Used
 - BigQuery
