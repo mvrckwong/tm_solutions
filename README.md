@@ -1,5 +1,5 @@
 # Thinking Machine Data Science
-Thinking Machines Solutions
+This is a solution set for TMDS take home exam. All outputs are within ".output" folder.
 
 <!-- Project Development -->
 ## Project Development Journey.
@@ -55,6 +55,13 @@ Finally, correlation is important relationship indications between variables, th
 Cost, retail price and sale price are correlated, illustrating how the base cost of a product influences the retail and final price.
 
 ![Correlation](.output/04_evaluate/2024210-Correlation_Merged_DataData_CorrSpearman.png)
+
+## Recommendation
+
+Based on a few evidence, they can focus their attention to their biggest markets - China, United States, Brazil and South Korea. That is where their biggest orders are located. Sales distribution on these areas must be streamlined, lowering down the baseline cost achieving more average order value. As shown, baseline cost can affect retail and sale prices.
+
+Second, focus on top categories and top brands with the highest order items. Those brands can attract customers, and has helped increase order volume.
+Based on the charts, negotiating the baseline price is the best way or increasing the number of volume of orders to further decrease the manufacturing cost. The baseline price would be helped attracts more customer and increase order volume.
 
 ## Technologies Used
 - BigQuery
