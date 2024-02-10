@@ -30,11 +30,12 @@ Thinking Machines Solutions
 ### PowerBI Dashboard
 ![Dashboard Summary](.output/01_pbi/01_Summary.PNG)
 ![Dashboard Customer](.output/01_pbi/02_Customer.PNG)
-![Dashboard DataModel](.output/01_pbi/03_DataModel.PNG)
+![Dashboard DataModel](.output/01_pbi/03_PBI_DataModel.PNG)
 
 ### Python Graphs
-![Dashboard Summary](.output/02_python/01_Summary.PNG)
-![Dashboard Summary](.output/02_python/01_Summary.PNG)
+![Missing Values](.output/03_graph_missing/2024210-Order_ItemsData_MatrixChart-NullExplore.png)
+![Missing Values Second](.output/03_graph_missing/2024210-OrdersData_MatrixChart-NullExplore.png)
+
 
 
 ## Technologies Used
