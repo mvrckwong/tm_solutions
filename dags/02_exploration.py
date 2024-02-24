@@ -1,6 +1,6 @@
 from config import *
 import pandas as pd
-from explore_dataset import CountMissingData, VisualizeMissing, EvaluateDataset, VisualizeFeatureColumns
+from explore_dataset import CountMissingData, VisualizeMissing
 
 COUNT_MISSING_DATA_DIR = OUTPUT_DIR / "02_count_missing"
 if not COUNT_MISSING_DATA_DIR.exists():
