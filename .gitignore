@@ -173,3 +173,4 @@ data/thelook_ecommerce-order_items.csv
 data/thelook_ecommerce-inventory_items.csv
 data/thelook_ecommerce-events.csv
 data/thelook_ecommerce-distribution_centers.csv
+*.db
